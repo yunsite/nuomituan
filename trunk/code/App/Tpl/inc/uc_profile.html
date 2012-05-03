@@ -1,0 +1,37 @@
+<div class="box">
+    <div class="box">
+        <div class="box-top"></div>
+        <div class="box-content">
+            <div class="head">
+                <h2>{$page_title}</h2>
+            </div>
+            <div class="sect" style="position:relative;">
+                <form method="post" action="__URL__/update">
+                    <input type="hidden" name="id" value="{$user.id}" />
+                    <table width="100%">
+                        <tbody>
+                            <tr>
+                                <td>
+                                <div class="field username">
+                                    <label for="settings-username">昵称</label>
+                                    <input type="text" value="{$user.nike_name}" class="f-input" id="settings-username" name="nike_name" size="30">
+                                </div><div class="blank"></div>
+                                <div class="field mobile">
+                                    <label for="settings-mobile">手机号码</label>
+                                    <input type="text" value="{$user.phone}" class="f-input" id="settings-mobile" name="phone" size="30">
+                                    <span class="hint">团购券将通过短信发到手机上</span>
+                                </div><div class="blank"></div>
+                                <div class="act">
+                                    <input type="submit" class="formbutton" id="settings-submit" name="commit" value="更新个人资料">
+                                </div></td>
+                                <td valign="top" style="width:180px;"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </form>
+            </div><!--end sect-->
+        </div>
+        <div class="box-bottom"></div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<include file="inc:header" />
+<div id="bdw" class="bdw">
+    <div id="bd" class="cf">
+        <div id="deal-buy">
+            <div id="content">
+                <div class="box" id="login">
+
+                    <div class="box">
+                        <div class="box-top"></div>
+                        <div class="box-content">
+                            <div class="head">
+                                <h2>{$page_title}</h2>
+                            </div>
+                            <div class="sect">
+                                <p style="padding: 20px 0pt; text-align: center;">
+                                    立即支付
+                                    [&nbsp;&nbsp;支付单号 ：<span class="red">{$list.oid}</span>&nbsp;&nbsp;]
+                                </p>
+
+                                <div style="padding: 20px 0pt; text-align: center;" class="order-check-form">
+                                    <div style="text-align:center">
+                                        <a onclick="window.open('__URL__/alipayto/oid/{$list.oid}/subject/小米团购订单：{$list.oid}/body/小米团购订单：{$list.oid}/money/{$list.money}')" href="javascript:;">
+                                        <input type="submit" class="paybutton" name="buy" value="前往支付宝在线支付">
+                                        </a>
+                                    </div>
+                                    <br>
+                                    <div style="text-align:center" class="red">
+                                        支付总额:￥{$list.money}
+                                    </div>
+                                </div>
+                                <div style="padding: 20px 0pt; text-align: center;">
+                                   <a href="__APP__/">» 今日团购</a>&nbsp;&nbsp;&nbsp; <a href="__APP__/order">» 我的订单</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-bottom"></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <!-- bd end -->
+    </div>
+    <include file="inc:footer" />

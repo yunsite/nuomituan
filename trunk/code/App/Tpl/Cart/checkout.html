@@ -1,0 +1,159 @@
+<include file="inc:header" />
+<div id="bdw" class="bdw">
+    <div id="bd" class="cf">
+        <div id="deal-buy">
+            <div id="content">
+                <div class="box" id="login">
+                    <form name="cart_form" id="cart_form" action="" method="post" />
+                    <div class="box">
+                        <div class="box-top"></div>
+                        <div class="box-content">
+                            <div class="head">
+                                <h2>结算中心</h2>
+                            </div>
+                            <div class="sect">
+                                <div id="cart_list">
+                                    <table class="order-table">
+                                        <tbody>
+                                            <tr>
+                                                <th class="deal-buy-desc">项目</th>
+                                                <th class="deal-buy-quantity">数量</th>
+                                                <th class="deal-buy-price">价格</th>
+                                                <th class="deal-buy-total">总价</th>
+                                            </tr>
+                                            <volist name="deal" id="item">
+                                            <tr class="deal_{$item.id} deal_cart_row">
+                                                <td class="deal-buy-desc">{$item.title}</td>
+                                                <td class="deal-buy-quantity">
+                                                <input type="text" style="ime-mode: disabled;" onblur="editCart({$item.id},this)"  id="deal-buy-quantity-input" value="{$item.cart}" name="quantity" maxlength="4" class="input-text f-input">
+                                                </td>
+                                                <td class="deal-buy-price"> ￥{$item.price} </td>
+                                                <td class="deal-buy-total"></td>
+                                            </tr>
+                                            </volist>
+                                            <tr class="order-total">
+                                                <td class="deal-buy-desc"><strong>商品总金额</strong></td>
+                                                <td class="deal-buy-quantity"></td>
+                                                <td class="deal-buy-price"></td>
+                                                <td class="deal-buy-total"><strong id="deal-buy-total-t">￥65</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="consignee-box order-pay-credit">
+                                <h3>配送信息：</h3>
+                                <if condition="$need_addr">
+                                    <div class="field consignee">
+                                        <label for="settings-consignee">收货人：</label>
+                                        <input type="text" value="叶龙彦" class="f-input" name="consignee" size="30">
+                                        <span class="red">*</span>
+                                    </div>
+                                    <div class="blank1"></div>
+                                    <div class="field region">
+                                        <label>地区信息：</label>
+                                        国家：
+                                        <select name="region_lv1">
+                                            <option value="0">=请选择=</option>
+                                            <option selected="selected" value="1">中国</option>
+                                        </select>
+
+                                        省：
+                                        <select name="region_lv2">
+                                            <option value="0">=请选择=</option>
+                                            <option selected="selected" value="2">北京</option>
+                                            <option value="3">安徽</option>
+                                        </select>
+
+                                        市：
+                                        <select name="region_lv3">
+                                            <option value="0">=请选择=</option>
+                                            <option selected="selected" value="52">北京</option>
+                                        </select>
+
+                                        区：
+                                        <select name="region_lv4">
+                                            <option value="0">=请选择=</option>
+                                            <option value="500">东城区</option>
+                                        </select>
+                                        <span class="red">*</span>
+                                    </div>
+                                    <div class="blank1"></div>
+                                    <div class="field address">
+                                        <label for="delivery-address">地址：</label>
+                                        <input type="text" value="河东区 七纬路 利中大楼" class="f-input" name="address" size="30">
+                                        <span class="red">*</span>
+                                    </div>
+                                    <div class="blank1"></div>
+                                    <div class="field zip">
+                                        <label for="delivery-zip">邮编：</label>
+                                        <input type="text" value="300387" class="f-input" name="zip" size="30">
+                                        <span class="red">*</span>
+                                    </div>
+                                    <div class="blank1"></div>
+                                    <div class="field mobile-phone">
+                                        <label for="delivery-mobile-phone">手机：</label>
+                                        <input type="text" value="18657506123" class="f-input" name="mobile" size="30">
+                                        <span class="red">*</span>
+                                    </div>
+                                    <div class="clear"></div>
+                                <else />
+                                    <div class="field mobile-phone">
+                                        <label for="delivery-mobile-phone">手机：</label>
+                                        <input type="text" value="{$user_info.phone}" class="f-input" name="phone" size="20" style="width: 150px"> (用于接收团购券)
+                                        <span class="red">*</span>
+                                    </div>
+                                </if>
+                                </div>
+                                <div id="cart_payment">
+                                    <div class="paytype">
+                                        <div class="order-check-form has-credit">
+                                            <div class="order-pay-credit">
+                                                <h3>支付方式</h3>
+                                            </div>
+                                            <div style="padding:10px;">
+                                                <div class="blank"></div>
+                                                <input type="radio" checked="checked" name="payment" value="1" />在线支付（支持支付宝和网银支付）
+                                            </div>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                                <div id="cart_total">
+                                    <div class="order-check-form ">
+                                        <p style="text-align: right; line-height: 24px;">
+                                            商品总价：<span class="red" id="total_pay"></span>
+                                        </p>
+                                        <p style="text-align: right; line-height: 24px;">
+                                            配送费用：<span class="red" id="delivery_fee">0</span>
+                                        </p>
+                                        <p style="text-align: right; line-height: 24px;">
+                                            应付款金额：<span class="red" id="should_pay"></span>
+                                        </p>
+                                        <div class="blank"></div>
+                                        <p style="text-align: right; line-height: 24px;"></p>
+                                        <div class="blank"></div>
+                                    </div>
+                                </div>
+                                <div id="cart_submit">
+                                    <div class="order-check-form ">
+                                        <p class="check-act">
+                                            <input type="submit" class="formbutton" value="确认无误，下单" />
+                                            <a style="margin-left: 1em;" href="__URL__">返回购物车</a>
+                                        </p>
+                                    </div>
+                                </div>
+                                <script>
+                                    computerCart(); 
+                                </script>
+                            </div>
+                        </div>
+                        <div class="box-bottom"></div>
+                    </div><!--end box-->
+                    </form>
+                </div>
+            </div>
+            <include file="inc:side" />
+        </div>
+        <!-- bd end -->
+    </div>
+    <include file="inc:footer" />

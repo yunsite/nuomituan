@@ -1,0 +1,66 @@
+<include file="inc:header" />
+<div id="bdw" class="bdw">
+    <div id="bd" class="cf">
+        <div id="deal-buy">
+            <div id="content">
+                <div class="box" id="login">
+                    <div class="box">
+                        <div class="box-top"></div>
+                        <div class="box-content">
+                            <div class="head">
+                                <h2>购物车</h2>
+                            </div>
+                            <div class="sect">
+                                <div id="cart_list">
+                                   <if condition="$deal">
+                                   <table class="order-table">
+                                        <tbody>
+                                            <tr>
+                                                <th class="deal-buy-desc">项目</th>
+                                                <th class="deal-buy-quantity">数量</th>
+                                                <th class="deal-buy-price">价格</th>
+                                                <th class="deal-buy-total">总价</th>
+                                                <th>删除</th>
+                                            </tr>
+                                            <volist name="deal" id="item">
+                                            <tr class="deal_{$item.id} deal_cart_row">
+                                                <td class="deal-buy-desc">{$item.title}</td>
+                                                <td class="deal-buy-quantity">
+                                                <input type="text" style="ime-mode: disabled;" onblur="editCart({$item.id},this)"  id="deal-buy-quantity-input" value="{$item.cart}" name="quantity" maxlength="4" class="input-text f-input">
+                                                </td>
+                                                <td class="deal-buy-price"> ￥{$item.price} </td>
+                                                <td class="deal-buy-total"></td>
+                                                <td><a onclick="del_cart({$item.id})" href="javascript:void(0);">删除</a></td>
+                                            </tr>
+                                            </volist>
+                                            <tr class="order-total">
+                                                <td class="" colspan=""></td>
+                                                <td class="deal-buy-desc" style="text-align:right" colspan="2"><strong>支付总额</strong></td>
+                                                <td class="deal-buy-total"><strong id="deal-buy-total-t"></strong></td>
+                                            </tr>
+                                        </tbody>
+                                        <script>
+                                           computerCart(); 
+                                        </script>
+                                    </table>
+                                    <div style="text-align: right;" class="form-submit">
+                                        <input type="button" onclick="location.href='__URL__/checkOut'" value="确认购买" name="buy" class="formbutton">
+                                    </div>
+                                    <else /> 
+                                    <h2>购物车空空的</h2>
+                                    <div style="text-align: right;" class="form-submit">
+                                        <input type="button" onclick="submit_cart();" value="返回主页" name="buy" class="formbutton">
+                                    </div>
+                                    </if>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-bottom"></div>
+                    </div>
+                </div>
+            </div>
+            <include file="inc:side" />
+        </div>
+        <!-- bd end -->
+    </div>
+    <include file="inc:footer" />

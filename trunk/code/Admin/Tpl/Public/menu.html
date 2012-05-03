@@ -1,0 +1,32 @@
+<div class="toggleCollapse"><h2>系统菜单</h2><div style="">收缩</div></div>
+<div class="accordion" fillSpace="sideBar">
+    <div class="accordionHeader">
+        <h2><span>icon</span>主菜单</h2>
+    </div>
+    <div class="accordionContent" style="height:200px">
+        <ul class="tree treeFolder expand" oncheck="kkk">
+        <volist id="item" name="menu" >
+            <eq name="item['access']" value="1">
+            <neq name="key" value='access'>
+            <li>
+                <a>{$key|getNodeGroupName}</a>
+                <ul>
+                <volist id="vo" name="item">
+                <eq name="vo['access']" value="1">
+                    <li><a href="__APP__/{$vo['name']}/index/" target="navTab" rel="{$vo['name']}">{$vo['title']}</a></li>
+                </eq>
+                </volist>
+                </ul>
+            </li>
+            </neq>
+            </eq>
+        </volist>
+        </ul>
+    </div>
+    <div class="accordionHeader">
+        <h2><span>icon</span>帮助信息</h2>
+    </div>
+    <div class="accordionContent">
+
+    </div>
+</div>

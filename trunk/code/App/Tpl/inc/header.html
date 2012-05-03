@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="Generator" />
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title> {$title} </title>
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/App/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/App/css/weebox.css" />
+        <script type="text/javascript" src="__PUBLIC__/App/js/jquery.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/App/js/script.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/App/js/jquery.bgiframe.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/App/js/jquery.weebox.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/App/js/jquery.pngfix.js"></script>
+        <script type="text/javascript">
+            var APP_ROOT = '__APP__';
+        </script>
+    </head>
+    <body class="bg-alt">
+        <div id="doc">
+            <div id="hdw">
+                <div class="head">
+                    <div id="hd">
+                        <div id="logo">
+                            <a style="font-size: 28px;font-weight: bold;text-decoration: none" class="link" href="__APP__">小米团</a>
+                        </div>
+                        <div class="guides">
+                            <div class="city">
+                                <h2>{$city.city}</h2>
+                            </div>
+                            <div id="guides-city-change" class="change">
+                                切换城市
+                            </div>
+                            <div id="guides-city-list" class="city-list">
+                                <ul>
+                                    <volist name="city_list" id="item">
+                                    <li <eq value="$city.city" name="item.city">class="current"</eq> >
+                                        <a href="__APP__/Index/index/city/{$item.city_py}">{$item.city}</a>
+                                    </li>
+                                    </volist>
+                                </ul>
+                            </div>
+                        </div>
+                        <ul class="nav cf">
+                            <volist name="nav_menu" id="item">
+                            <li>
+                                <a href="{$item}"  class="">{$key}</a>
+                            </li>
+                            </volist>
+                        </ul>
+
+                        <div class="refer">
+                            » <a href="__APP__/index/subscribe">邮件订阅</a>&nbsp;&nbsp;
+                            » <a href="__APP__/user/verifycoupon">团购验证</a>&nbsp;&nbsp;
+                        </div>
+                        <div class="logins">
+                            <if condition="$user_info">
+                            <ul rel="" id="account">
+                                <li title="{$user_info.nike_name}" class="username">
+                                    欢迎您，{$user_info.nike_name}
+                                </li>
+                                <li class="account">
+                                    <a class="account" id="myaccount" href="__APP__/User">我的帐户</a>
+                                </li>
+                                <li class="logout">
+                                    <a href="__APP__/User/logout">退出</a>
+                                </li>
+                            </ul>
+                            <else />
+                            <ul id="account" rel="">
+                                <li class="login"><a href="__APP__/User/login">登陆</a></li>
+                                <li class="signup"><a href="__APP__/User/reg">注册</a></li>
+                            </ul>
+                            </if>
+                            <div class="line"></div>
+                        </div>
+                        <ul id="myaccount-menu" style="display: none;">
+                            <volist name="user_menu" id="item">
+                            <li>
+                                <a href="{$item}"  class="">{$key}</a>
+                            </li>
+                            </volist>
+                        </ul>
+                        <div id="head-tel">
+                            400-100-5678
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="blank"></div>
+            <div id="sysmsg-error-box">
+                <div class="sysmsgw hidd" id="sysmsg-error">
+                    <div class="sysmsg">
+                        <span></span><span class="close">{$LANG.CLOSE}</span>
+                    </div>
+                </div>
+
+                <div class="sysmsgw hidd" id="sysmsg-success">
+                    <div class="sysmsg">
+                        <span></span><span class="close">{$LANG.CLOSE}</span>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+{if $success}
+$.showSuccess("{$success}");
+{/if}
+{if $error}
+$.showErr("{$error}");
+{/if}
+            </script>

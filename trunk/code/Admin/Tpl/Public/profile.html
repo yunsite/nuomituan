@@ -1,0 +1,51 @@
+<div class="page">
+	<div class="pageContent">
+	
+	<form method="post" action="__URL__/change/navTabId/{$Think.const.MODULE_NAME }" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="id" value="{$vo.id}">
+		<div class="pageFormContent" layoutH="58">
+	<div class="unit">
+                <label>电话：</label>
+                <input type="text" class=""   name="phone" value="{$vo.phone}">
+            </div>
+            <div class="unit">
+                <label>QQ：</label>
+                <input type="text" class=""   name="qq" value="{$vo.qq}">
+            </div>
+            <div class="unit">
+                <label>Email：</label>
+                <input type="text" class=""   name="email" value="{$vo.email}">
+            </div>
+            <div class="unit">
+                <label>银行开户名：</label>
+                <input type="text" class=""   name="bank_name" value="{$vo.bank_name}">
+                <span>用于抢单报酬的结算，可以填写支付宝、银行卡，建议支付宝。</span>
+            </div>
+            <div class="unit">
+                <label>银行帐号：</label>
+                <input type="text" class=""   name="bank_num" value="{$vo.bank_num}">
+            </div>
+            <div class="unit">
+                <label>银行类型：</label>
+                <input type="text" class=""   name="bank_sort" value="{$vo.bank_sort}">
+            </div>
+            <div class="unit">
+                <label>开户行：</label>
+                <input type="text" class=""   name="bank_branch" value="{$vo.bank_branch}">
+            </div>
+	<div class="unit">
+		<label>备注：</label>
+		<textarea class=""  name="remark"  rows="5" cols="57" >{$vo.remark}</textarea>
+	</div>
+
+</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">Submit</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">Cancel</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+	</div>
+</div>
