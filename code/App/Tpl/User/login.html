@@ -1,0 +1,78 @@
+<include file="inc:header"/>
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+  <div id="deal-default">
+    <div id="content">
+      <div class="box" id="login">
+        <div class="box">
+          <div class="box-top"></div>
+          <div class="box-content">
+            <div class="head">
+              <h2>会员登录</h2>
+              <span>&nbsp;或者 <a href="__URL__/reg">注册</a></span> </div>
+            <div class="sect"> 
+              
+              <!--登录表单-->
+              
+              <form method="post" action="__SELF__" name="reg_form">
+                <div class="field email">
+                  <label for="login-email-address">Email/用户名</label>
+                  <input type="text" value="" class="f-input" id="login-email-address" name="username" size="30" tabindex="1">
+                </div>
+                <div class="clear"></div>
+                <div class="field password">
+                  <label for="login-password">密码</label>
+                  <input type="password" value="" class="f-input" id="login-password" name="password" size="30" tabindex="2">
+                  <span class="lostpassword"> <a href="/t/user.php?city=fujian&act=getpassword&">忘记密码?</a></span> </div>
+                <div class="field autologin"> 下次自动登录？
+                  <input type="checkbox" id="autologin" name="auto_login" value="1" tabindex="3">
+                </div>
+                <div class="clear"></div>
+                <div class="act">
+                  <input type="hidden" name="ajax" value="">
+                  <input type="submit" class="formbutton" id="login-submit" name="commit" value="登录">
+                  <input type="button" class="formbutton" id="login-submit" name="commit" value="注册" onclick="location.href='__URL__/reg';" />
+                </div>
+              </form>
+              
+              <!--登录表单--> 
+              <script type="text/javascript">
+				$(document).ready(function() {
+					$("#login-submit").click(function() {
+						if($.trim($("#login-email-address").val()).length == 0) {
+							$.showErr("Email格式错误，请重新输入或者用户名格式错误，请重新输入");
+							$("#login-email-address").focus();
+							return false;
+						}
+
+						if(!$.minLength($("#login-password").val(), 4, false)) {
+							$.showErr("密码格式错误，请重新输入");
+							$("#login-password").focus();
+							return false;
+						}
+					});
+				});
+            </script> 
+            </div>
+          </div>
+          <div class="box-bottom"></div>
+        </div>
+      </div>
+    </div>
+    <!--side-->
+    <div id="sidebar">
+      <div class="sbox">
+        <div class="sbox-top"></div>
+        <div class="sbox-content">
+          <div class="side-tip">
+            <h2>还没有帐户？</h2>
+            <p> 立即<a href="__URL__/reg">注册</a>，仅需30秒！ </p>
+          </div>
+        </div>
+        <div class="sbox-bottom"></div>
+      </div>
+    </div>
+  </div>
+  <!-- bd end --> 
+</div>
+<include file="inc:footer"/>

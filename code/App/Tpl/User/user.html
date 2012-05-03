@@ -1,0 +1,25 @@
+<include file="inc:header" />
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="deal-default">
+			<div id="dashboard" class="dashboard">
+					<ul>
+						<volist name="user_menu" id="item">
+                        <li <eq name="page_title" value="$key">class="current"</eq>>
+                            <a  href="{$item}">{$key}</a>
+                            <span></span>
+                        </li>
+                        </volist>
+					</ul>
+			</div>
+			<div id="content" class="cf" style="overflow:hidden;">	
+				<div id="uc" class="cf">	
+				<include file="$tpname"/>
+				</div>			
+			</div>
+			<!--side-->
+			<include file="inc:user_info" />
+	</div>
+	<!-- bd end -->
+</div>
+<include file="inc:footer" />

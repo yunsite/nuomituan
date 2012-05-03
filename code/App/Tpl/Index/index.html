@@ -1,0 +1,255 @@
+<include file="inc:header" />
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="deal-default">
+			<div id="content">
+			    <include file="inc:share" />
+				<div id="deal-intro" class="cf">
+					<h1>
+						{$deal.title}				
+					</h1>
+					<div class="main">
+						<div class="deal-buy">
+							<div class="deal-price-tag"></div>
+							<p class="deal-price" id="deal-price">
+								<strong>￥{$deal.price}</strong>
+								<!--begin button status-->
+<!-- 								{if $deal.time_status eq 0} {*/未开始/*} -->
+								<!-- <span>		
+									<a href="javascript:void(0);">					
+										<img src="__PUBLIC__/App/images/bg-deal-wait-text.gif">	
+									</a>								
+								</span> -->
+								<!-- {if $deal.time_status eq 1}{*/已开始/*}
+									{if $deal.buy_status eq 2} {*/卖光/*}
+									<span>
+										<a href="javascript:void(0);">
+											<img src="__PUBLIC__/App/images/bg-deal-soldout-text.gif">
+										</a>
+									</span>
+									{else}
+									-->
+									<span>
+										<a href="__APP__/Cart/add/id/{$deal.id}">
+											<img src="__PUBLIC__/App/images/button-deal-buy.gif">
+										</a>
+									</span>
+							     <!--
+									{/if}
+								{/if}
+								{if $deal.time_status eq 2} {*/已过期/*}
+									{if $deal.buy_status eq 2} {*/卖光/*}
+									<span>
+											<a href="javascript:void(0);">
+												<img src="__PUBLIC__/App/images/bg-deal-soldout-text.gif">
+											</a>
+										</span>
+									{else}
+									<span>		
+										<a href="javascript:void(0);">					
+											<img src="__PUBLIC__/App/images/bg-deal-expired-text.gif">	
+										</a>								
+									</span>
+									{/if}
+								{/if} -->
+								<!--end button status-->		
+							</p>
+						</div>
+						<table class="deal-discount">
+                            <tbody>
+                                <tr>
+                                    <th>原价</th>
+                                    <th>折扣</th>
+                                    <th>节省</th>
+                                </tr>
+                                <tr>
+                                    <td style="text-decoration: line-through">￥{$deal.origin_price}</td>
+                                    <td>{$deal.discount}折</td>
+                                    <td>￥{$deal.save_price}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+<!-- 						{if ($deal.begin_time ne 0 and $deal.time_status eq 0) or ($deal.end_time ne 0 and $deal.time_status eq 1)} {* 时间 *} -->
+						<!-- <div id="deal-timeleft-box">
+							<div id="deal-timeleft" class="deal-box deal-timeleft deal-on">
+								<h3>剩余时间</h3>
+								<div class="limitdate">
+									<ul id="counter"></ul>
+								</div>
+							</div>						
+						</div> -->
+						<!-- {/if} -->
+
+						<div id="deal-status" class="deal-box deal-status deal-status-open">
+                                <p class="deal-buy-tip-top"><strong>{$deal.user_count}</strong>人已购买{$deal.brought_count}份</p>
+                                <p class="deal-buy-tip-notice">
+                                <p class="deal-buy-on">团购已成功，<br>可继续购买…</p>
+                                <p class="deal-buy-tip-btm">{$deal.success_time} <br>达到最低团购数{$deal.min_brought}</p>
+                        </div>
+					</div>
+					<div class="side">
+                        <div id="goods_imgs" class="deal-buy-cover-img">
+                            <div class="mid">
+                                <ul>
+                                                                <li class="first">
+                                <img src="{$deal.image}">
+                                </li>
+                                                                
+                                </ul>
+                                <div id="img_list">
+                                                                
+                                </div>
+                            </div>
+                        </div>                  
+                    </div>
+				</div>
+
+				<div id="deal-stuff" class="cf">
+    <div class="box box-split">
+        <div class="box-top"></div>
+        <div class="box-content cf">
+            <div class="main">
+                {$deal.content}
+            </div>
+            <div class="side">
+                <div id="side-business">
+                    <h2>{$deal.shop_name} </h2>
+                    <div class="blank"></div>
+                    <ul>
+                        <span id="sp_location">
+                            <li>
+                                {$deal.shop_connect}
+                            </li>
+                            <li>
+                                <span class="saler_map"> <img src="http://ditu.google.cn/maps/api/staticmap?zoom=13&amp;size=194x194&amp;maptype=roadmap&amp;mobile=true&amp;markers=26.067974,119.313016&amp;sensor=false&amp;language=zh_CN"> <a href="http://ditu.google.cn/maps?f=q&amp;source=s_q&amp;hl=zh-CN&amp;geocode=&amp;q=%E7%A6%8F%E5%BB%BA%E7%9C%81%E7%A6%8F%E5%B7%9E%E5%B8%82%E5%A4%A7%E5%88%A9%E5%98%89" target="_blank">查看地图</a> </span>
+                            </li>
+                        </span>
+                    </ul>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="box-bottom"></div>
+    </div>
+</div>
+</div>
+			<div style="padding-top: 30px;">
+			<include file="inc:side" />
+			</div>
+	</div>
+	<!-- bd end -->
+</div>
+<script type="text/javascript">
+{if $deal.time_status eq 1} {*/结束倒计时/*}
+var endTime = {$deal.end_time}000;
+var nowTime = {function name=get_gmtime}000;
+var sysSecond = (endTime - nowTime) / 1000;
+{/if}
+{if $deal.time_status eq 0} {*/开始倒计时/*}
+var beginTime = {$deal.begin_time}000;
+var nowTime = {function name=get_gmtime}000;
+var sysSecond = (beginTime - nowTime) / 1000;
+{/if}
+var interValObj;
+setRemainTime();
+function setRemainTime()
+{	
+	if (sysSecond > 0)
+	{
+		var second = Math.floor(sysSecond % 60);              // 计算秒     
+		var minite = Math.floor((sysSecond / 60) % 60);       //计算分
+		var hour = Math.floor((sysSecond / 3600) % 24);       //计算小时
+		var day = Math.floor((sysSecond / 3600) / 24);        //计算天
+		var timeHtml = "<span>"+hour+"</span>"+LANG['HOUR']+"<span>"+minite+"</span>"+LANG['MIN']+"";
+		if(day > 0)
+			timeHtml ="<span>"+day+"</span>"+LANG['DAY']+"" + timeHtml;
+		
+		timeHtml+="<span>"+second+"</span>"+LANG['SEC']+"";
+		
+		try
+		{
+			$("#counter").html(timeHtml);
+			sysSecond--;
+		}
+		catch(e){}}
+	else
+	{window.clearTimeout(interValObj);}
+	interValObj = window.setTimeout("setRemainTime()", 1000); 	
+}
+</script>
+<!--图片轮播-->
+<script type="text/javascript">
+var errHideTimeOut;
+var userMenuTimeOut;
+var ecvTimeOut;
+var imgListCurr=0;
+var imgListNext=0;
+var imgListCount=0;
+var imgListInterval;
+
+function imagesInit()
+{
+	imgListCount = $('#img_list a').size();
+	if(imgListCount < 2)
+		return;
+	imgListInterval = setInterval('imagesRun()',3000);
+	$('#goods_imgs li,#img_list a').hover(function(){
+		clearInterval(imgListInterval);
+	},function(){
+		imgListInterval = setInterval('imagesRun()',3000);
+	});
+	$('#img_list a').click(function(){
+		var index = $('#img_list a').index(this);
+		if (imgListCurr != index){
+			imagesPlay(index);
+            imgListCurr = index;
+        };
+		return false;
+    });
+}
+
+function imagesRun()
+{
+	imgListNext = imgListCurr + 1;
+    if (imgListCurr == imgListCount - 1)
+		imgListNext = 0;
+		
+	imagesPlay(imgListNext);
+	
+	imgListCurr++;
+	
+    if (imgListCurr > imgListCount - 1)
+	{
+		imgListCurr = 0;
+		imgListNext = imgListCurr + 1;
+	}
+}
+
+function imagesPlay(next)
+{
+	$('#goods_imgs li').eq(imgListCurr).css({'opacity':'0.5'}).animate({'left':'-440px','opacity':'1'},'slow',function(){
+		$(this).css({'left':'440px' });
+	}).end().eq(next).animate({'left':'0px','opacity':'1'},'slow',function(){
+		$('#img_list a').siblings('a').removeClass('active').end().eq(next).addClass('active');
+	});
+}
+function switch_location()
+{
+	var location_id = $("#locations_select").val();
+	$.ajax({
+		url: APP_ROOT+"/ajax.php?act=get_supplier_location&id="+location_id,
+		success:function(html)
+		{
+			$("#sp_location").html(html);
+		}
+	});
+}
+$(document).ready(function(){
+	imagesInit();
+	$("#locations_select").bind("change",function(){
+		switch_location();
+	});
+});
+</script>
+<include file="inc:footer" />

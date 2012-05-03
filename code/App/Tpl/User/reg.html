@@ -1,0 +1,365 @@
+<include file="inc:header"/>
+<div id="bdw" class="bdw">
+<div id="bd" class="cf">
+  <div id="signup">
+    <div id="content" class="signup-box">
+      <div class="box">
+        <div class="box">
+          <div class="box-top"></div>
+          <div class="box-content">
+            <div class="head">
+              <h2>会员注册</h2>
+              <span>&nbsp;或者 <a href="__URL__/login">登录</a></span> </div>
+            <div class="sect"> 
+              <!--注册表单-->
+              <form action="" method="post" id="signup-user-form">
+                <div class="field email">
+                  <label for="signup-email-address">Email</label>
+                  <input type="text" value="" class="f-input" id="signup-email-address" name="email" size="30">
+                  <span class="f-input-tip"></span><span class="hint">登录及找回密码用，不会公开</span> </div>
+                <div class="blank1"></div>
+                <div class="field username">
+                  <label for="signup-username">用户名</label>
+                  <input type="text" value="" class="f-input" id="signup-username" name="username" size="30">
+                  <span class="f-input-tip"></span><span class="hint">4-15个字符，一个汉字为两个字符</span> </div>
+                <div class="blank1"></div>
+                <div class="field password">
+                  <label for="signup-password">密码</label>
+                  <input type="password" class="f-input" id="signup-password" name="password" size="30">
+                  <span class="f-input-tip"></span><span class="hint">最少 4 个字符 </span> </div>
+                <div class="blank1"></div>
+                <div class="field password">
+                  <label for="signup-password-confirm">确认密码</label>
+                  <input type="password" class="f-input" id="signup-password-confirm" name="repassword" size="30">
+                  <span class="f-input-tip"></span> </div>
+                <div class="blank1"></div>
+                <div class="field mobile">
+                  <label for="signup-mobile">手机号码</label>
+                  <input type="text" value="" class="f-input" id="settings-mobile" name="phone" size="30">
+                  <span class="f-input-tip"></span><span class="hint"> 团购券将通过短信发到手机上</span> </div>
+                <div class="blank1"></div>
+                <div class="field city">
+                  <label for="signup-city" id="enter-address-city-label">订阅团购</label>
+                  <input type="checkbox" checked="checked" id="subscribe" name="subscribe" value="1" tabindex="3">
+                </div>
+                <div class="blank"></div>
+                <div class="clear"></div>
+                <div class="act">
+                  <input type="submit" class="formbutton" id="signup-submit" name="commit" value="注册">
+                </div>
+              </form>
+              
+              <!--注册表单--> 
+              
+            </div>
+          </div>
+          <div class="box-bottom"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!--side-->
+    
+    <div id="sidebar">
+      <div class="sbox">
+        <div class="sbox-top"></div>
+        <div class="sbox-content">
+          <div class="side-tip">
+            <h2>已有会员帐户？</h2>
+            <p> 请直接<a href="/t/user.php?city=fujian&act=login&">登录</a> </p>
+          </div>
+        </div>
+        <div class="sbox-bottom"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- bd end --> 
+  
+</div>
+<script type="text/javascript">
+		$(document).ready(function() {
+
+			$("#signup-submit").click(function() {
+
+				if($.trim($("#signup-email-address").val()).length == 0) {
+
+					$("#signup-email-address").focus();
+
+					$.showErr("Email不能为空");
+
+					return false;
+
+				}
+
+				if(!$.checkEmail($("#signup-email-address").val())) {
+
+					$("#signup-email-address").focus();
+
+					$.showErr("Email格式错误，请重新输入");
+
+					return false;
+
+				}
+
+				if(!$.minLength($("#signup-username").val(), 3, true)) {
+
+					$("#signup-username").focus();
+
+					$.showErr("用户名格式错误，请重新输入");
+
+					return false;
+
+				}
+
+				if(!$.maxLength($("#signup-username").val(), 16, true)) {
+
+					$("#signup-username").focus();
+
+					$.showErr("用户名格式错误，请重新输入");
+
+					return false;
+
+				}
+
+				if(!$.minLength($("#signup-password").val(), 4, false)) {
+
+					$("#signup-password").focus();
+
+					$.showErr("密码格式错误，请重新输入");
+
+					return false;
+
+				}
+
+				if($("#signup-password-confirm").val() != $("#signup-password").val()) {
+
+					$("#signup-password-confirm").focus();
+
+					$.showErr("密码确认失败");
+
+					return false;
+
+				}
+
+				if(!$.checkMobilePhone($("#settings-mobile").val())) {
+
+					$("#settings-mobile").focus();
+
+					$.showErr("手机号码格式错误，请重新输入");
+
+					return false;
+
+				}
+
+			});
+
+			//开始绑定
+
+			$("#signup-email-address").bind("blur", function() {
+
+				if($.trim($("#signup-email-address").val()).length == 0) {
+
+					formError($("#signup-email-address"), "Email不能为空");
+
+					return false;
+
+				}
+
+				if(!$.checkEmail($("#signup-email-address").val())) {
+
+					formError($("#signup-email-address"), "Email格式错误，请重新输入");
+
+					return false;
+
+				}
+
+				var ajaxurl = APP_ROOT + "/ajax.php?act=check_field";
+
+				var query = new Object();
+
+				query.field_name = "email";
+
+				query.field_data = $.trim($(this).val());
+
+				$.ajax({
+
+					url : ajaxurl,
+
+					data : query,
+
+					type : "POST",
+
+					dataType : "json",
+
+					success : function(data) {
+
+						if(data.status == 1) {
+
+							formSuccess($("#signup-email-address"), "可以使用");
+
+							return false;
+
+						} else {
+
+							formError($("#signup-email-address"), data.info);
+
+							return false;
+
+						}
+
+					}
+				});
+
+			});
+			//邮箱验证
+
+			$("#signup-username").bind("blur", function() {
+
+				if(!$.minLength($("#signup-username").val(), 3, true)) {
+
+					formError($("#signup-username"), "用户名格式错误，请重新输入");
+
+					return false;
+
+				}
+
+				if(!$.maxLength($("#signup-username").val(), 16, true)) {
+
+					formError($("#signup-username"), "用户名格式错误，请重新输入");
+
+					return false;
+
+				}
+
+				var ajaxurl = APP_ROOT + "/ajax.php?act=check_field";
+
+				var query = new Object();
+
+				query.field_name = "user_name";
+
+				query.field_data = $.trim($(this).val());
+
+				$.ajax({
+
+					url : ajaxurl,
+
+					data : query,
+
+					type : "POST",
+
+					dataType : "json",
+
+					success : function(data) {
+
+						if(data.status == 1) {
+
+							formSuccess($("#signup-username"), "可以使用");
+
+							return false;
+
+						} else {
+
+							formError($("#signup-username"), data.info);
+
+							return false;
+
+						}
+
+					}
+				});
+
+			});
+			//用户名验证
+
+			$("#signup-password").bind("blur", function() {
+
+				if(!$.minLength($("#signup-password").val(), 4, false)) {
+
+					formError($("#signup-password"), "密码格式错误，请重新输入");
+
+					return false;
+
+				}
+
+				formSuccess($("#signup-password"), "可以使用");
+
+			});
+			//密码验证
+
+			$("#signup-password-confirm").bind("blur", function() {
+
+				if($("#signup-password-confirm").val() != $("#signup-password").val()) {
+
+					formError($("#signup-password-confirm"), "密码确认失败");
+
+					return false;
+
+				}
+
+				formSuccess($("#signup-password-confirm"), "验证正确");
+
+			});
+			//确认密码验证
+
+			$("#settings-mobile").bind("blur", function() {
+
+				if(!$.checkMobilePhone($("#settings-mobile").val())) {
+
+					formError($("#settings-mobile"), "手机号码格式错误，请重新输入");
+
+					return false;
+
+				}
+
+				var ajaxurl = APP_ROOT + "/ajax.php?act=check_field";
+
+				var query = new Object();
+
+				query.field_name = "mobile";
+
+				query.field_data = $.trim($(this).val());
+
+				$.ajax({
+
+					url : ajaxurl,
+
+					data : query,
+
+					type : "POST",
+
+					dataType : "json",
+
+					success : function(data) {
+
+						if(data.status == 1) {
+
+							if(query.field_data != '')
+
+								formSuccess($("#settings-mobile"), "可以使用");
+							
+else
+
+								formSuccess($("#settings-mobile"), "");
+
+							return false;
+
+						} else {
+
+							formError($("#settings-mobile"), data.info);
+
+							return false;
+
+						}
+
+					}
+				});
+
+			});
+			//手机验证
+
+		});
+
+
+    </script> 
+<include file="inc:footer"/> 

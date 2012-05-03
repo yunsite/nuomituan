@@ -1,0 +1,116 @@
+<div class="box">
+    <div class="box">
+        <div class="box-top"></div>
+        <div class="box-content">
+            <div class="head">
+                <h2>{$page_title}</h2>
+            </div>
+            <div class="sect">
+
+                <table cellspacing="1" cellpadding="0" border="0" id="order_info">
+                    <tbody>
+                        <tr>
+                            <td class="ltd">订单号：</td>
+                            <td class="rtd" colspan="3">{$order.id}</td>
+                        </tr>
+
+                        <tr>
+                            <td>支付状态：</td>
+                            <td class="rtd" colspan="3">{$order.status|showOrderStatus}
+                            <eq name="order.status" value="1">
+                                <a href="__APP__/cart/payment/oid/{$order.id}">继续付款</a>
+                                <a href="__URL__/cancel/id/{$order.id}">取消订单</a>
+                            </eq>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>下单时间：</td>
+                            <td class="rtd" colspan="3"> {$order.ctime|date="Y-m-d H:m:s",###} </td>
+                        </tr>
+                        <if condition="$order.status gt 1">
+                        <tr>
+                            <td>支付时间：</td>
+                            <td class="rtd" colspan="3"> {$order.pay_time|date="Y-m-d H:m:s",###} </td>
+                        </tr>
+                        </if>
+                        <if condition="$needAddr">
+                        <tr>
+                            <td>配送状态：</td>
+                            <td class="rtd" colspan="3"> 未发货                                                                     &nbsp;&nbsp;运费：￥10 </td>
+                        </tr>
+                        <tr>
+                            <td>收货人：</td>
+                            <td class="rtd">叶龙彦</td>
+                            <td>手机：</td>
+                            <td class="rtd">18657506123</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>地区信息：</td>
+                            <td class="rtd" colspan="3"> 国家：中国&nbsp;&nbsp;
+                            省：北京&nbsp;&nbsp;
+                            市：北京&nbsp;&nbsp;
+                            区：崇文区&nbsp;&nbsp; </td>
+                        </tr>
+                        <tr>
+                            <td>地址：</td>
+                            <td class="rtd" colspan="3"> 河东区 七纬路 利中大楼 </td>
+                        </tr>
+                        <tr>
+                            <td>邮编：</td>
+                            <td class="rtd" colspan="3">300387</td>
+                        </tr>
+                        </if>
+                        <tr>
+                            <td class="rtd" colspan="4">
+                            <table cellspacing="0" cellpadding="0" border="0" class="coupons-table" id="order-list">
+                                <tbody>
+                                    <tr>
+                                        <th style="width: 200px;">项目</th>
+                                        <th width="50">单价</th>
+                                        <th width="30">数量</th>
+                                        <th width="50">总价</th>
+                                        <th width="170">团购券</th>
+                                    </tr>
+                                    <volist name="detail" id="vo">
+                                    <tr class="alt">
+                                        <td style="text-align: left;"><a href="__APP__/Index/deal/id/{$vo.id}">{$vo.title}</a></td>
+                                        <td>￥{$vo.price}</td>
+                                        <td>{$vo.count}</td>
+                                        <td>￥{$vo.money}</td>
+                                        <td>
+                                        <if condition="$order.status gt 1">
+                                            <volist name="vo.coupon" id="coupon">
+                                            编号:{$coupon.coupon_no}&nbsp;密码:{$coupon.coupon_code}<br />
+                                            </volist>
+                                       </td>
+                                       <else />
+                                       未支付，无团购券
+                                       </if>
+                                    </tr>
+                                    </volist>
+                                </tbody>
+                            </table></td>
+                        </tr>
+                        <tr>
+                            <td class="rtd" colspan="4">
+                            <div id="cart_total_box">
+                                <div class="order-check-form ">
+                                    <p style="text-align: right; line-height: 24px;">
+                                        订单总价：
+                                        <span class="red">￥{$order.final_money}</span>
+                                    </p>
+                                    <div class="blank"></div>
+                                    <p style="text-align: right; line-height: 24px;"></p>
+                                    <div class="blank"></div>
+                                </div>
+                            </div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div><!--end sect-->
+        </div>
+        <div class="box-bottom"></div>
+    </div>
+</div>
+<div class="blank"></div>

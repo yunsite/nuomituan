@@ -1,0 +1,43 @@
+<div class="box">
+    <div class="box">
+        <div class="box-top"></div>
+        <div class="box-content">
+            <div class="head">
+                <h2>我的订单</h2>
+
+            </div>
+            <div class="sect">
+                <table cellspacing="0" cellpadding="0" border="0" class="coupons-table">
+                    <tbody>
+                        <tr>
+                            <th>订单号</th>
+                            <th>下单时间</th>
+                            <th>支付总额</th>
+                            <th>订单状态</th>
+                            <th>操作</th>
+                        </tr>
+                        <volist name="list" id="vo">
+                        <tr class="alt">
+                            <td style="text-align:left;">{$vo.id}</td>
+                            <td>{$vo.ctime|date="Y-m-d H:m:s",###}</td>
+                            <td>￥{$vo.money}</td>
+                            <td>{$vo.status|showOrderStatus}</td>
+                            <td>
+                                <a href="__URL__/view/id/{$vo.id}">查看详情</a>
+                                <if condition="$vo.status eq 1">
+                                <a href="__APP__/cart/payment/oid/{$vo.id}">支付</a>
+                                <a href="__URL__/cancel/id/{$vo.id}">取消</a>
+                                <else />
+                                <a href="__URL__/cancel/id/{$vo.id}">查看团购券</a>
+                                </if>
+                            </td>
+                        </tr>
+                        </volist>
+                    </tbody>
+                </table>
+                <div class="blank"></div>
+            </div><!--end sect-->
+        </div>
+        <div class="box-bottom"></div>
+    </div>
+</div>
