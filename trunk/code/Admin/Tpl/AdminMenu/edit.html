@@ -1,0 +1,59 @@
+
+<div class="pageContent">
+
+
+	<form method="post" action="__URL__/update/navTabId/__MODULE__" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<input type="hidden" name="user_id" value="<?php echo $_SESSION[C('USER_AUTH_KEY')] ?>"/>
+		<input type="hidden" name="id" value="{$vo.id}" />
+		<div class="pageFormContent" layoutH="58">
+			<div class="unit">
+				<label>名称：</label>
+				<input type="text" class="required"   name="title" value="{$vo.title}">
+			</div>
+			
+			<div class="unit">
+				<label>URL：</label>
+				<input type="text" class="required" name="url" value="{$vo.url}">
+			</div>
+			<div class="unit">
+				<label>上级分类：</label>
+				<select class="small bLeft"  name="fid">
+                    <option value="0">顶级分类</option>
+                    <volist name="menu_lsit" id="cmenu">
+                        <option <eq name="cmenu.id" value="$vo.fid">selected="selected"</eq> value="{$cmenu.id}">{$cmenu.title}</option>
+                    </volist>
+                </select>
+			</div>
+			<div class="unit">
+				<label>排序：</label>
+				<input type="text" class="required" name="sort" value="{$vo.sort}">
+			</div>
+			<div class="unit">
+				<label>是否显示：</label>
+				<select class="small bLeft"  name="display">
+					<option <eq name="vo.display" value="1" >selected</eq> value="1">显示</option>
+					<option <eq name="vo.display" value="0" >selected</eq> value="0">隐藏</option>
+				</select>
+			</div>
+			<div class="unit">
+				<label>是否是对话框：</label>
+				<select class="small bLeft"  name="dialog">
+					<option <eq name="vo.dialog" value="1" >selected</eq> value="1">对话框</option>
+					<option <eq name="vo.dialog" value="0" >selected</eq> value="0">navTab</option>
+				</select>
+			</div>
+			<div class="unit">
+				<label>备  注：</label>
+				<textarea class="large bLeft"  name="tip" rows="5" cols="57">{$vo.tip}</textarea>
+			</div>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">Submit</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">Cancel</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+</div>
+

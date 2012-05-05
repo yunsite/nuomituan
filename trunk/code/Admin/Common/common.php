@@ -9,15 +9,69 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 // $Id$
-function showSeckillStatus($status){
-    if($status){
-        return "已审核";
-    }else{
-        return "<font color='red'>未审核</font>";
+require ROOT."/App/Common/common.php";
+function showDealStatus($status){
+    $deal_status = getDealStatus();
+    switch ($status) {
+        case $deal_status['unstart']:
+            return "未开始";
+            break;
+        case $deal_status['unsuccess']:
+            return "未成功";
+            break;
+        case $deal_status['success']:
+            return "已成功";
+            break;
+        
     }
 }
-function showTaobaoLink($id){
-    return "<a target='_block' href='http://www.taobao.com/webww/ww.php?ver=3&touid={$id}&siteid=cntaobao&status=1&charset=utf-8'>{$id}</a>";
+/**
+ * 递归处理菜单
+ * @param $menu array 需要处理的菜单
+ * @return array 处理完成
+ * 
+ */
+function displayMenu($menu,$son=true){
+    $html = '';    
+    if($son){
+        $html .= "<ul>\n";
+    }else{
+        $html .= "<ul class=\"tree treeFolder expand\" onclick='kkk'>\n";
+    }
+    foreach ($menu as $value) {
+         $target = "navTab";    
+        if($value['dialog']){
+            $target = "dialog"; 
+        }
+        $url = __APP__.$value['url'];
+        if($value['url'] != '/'){
+            $html .= "<li>\n<a target=\"{$target}\" rel=\"ac_{$value['id']}\" href=\"$url\"> {$value['title']} </a>\n";
+        }else{
+            $html .= "<li>\n<a>{$value['title']} </a>\n";
+        }
+        if(count($value['menu'])){
+            $html .= displayMenu($value['menu']);
+        }
+        $html .= "</li>\n";
+    }
+    "";
+    $html .= "</ul>\n";
+    return $html;
+}
+function fetchMenu($menu,$fid=0){
+    $new  = array(); 
+    $tem = array();   
+    foreach ($menu as $key => $value) {
+        //print_r($value);die;    
+        if($value['fid'] == $fid){
+            $tem = $value;
+            unset($menu[$key]);    
+            $tem['menu'] = fetchMenu($menu,$value['id']);
+            $new[] = $tem;
+            $tem = array();
+        }
+    }
+    return $new;
 }
 function checkAdmin($account){
     if($account == 'root' || $account == "admin"){
@@ -30,23 +84,6 @@ function getTime(){
     return time();
 }
 //手机版本选择的option
-function assignPhoneSort(){
-    $sort_arr = C("phone_sort");
-    $option = '';
-    foreach($sort_arr as $k => $v){
-        $option .= "<option value='{$k}'>$v</option>\n";
-    }
-    return $option;
-}
-//显示手机版本
-function showPhoneSort($id){
-    $sort_arr = C("phone_sort");
-    return $sort_arr[$id];
-}
-//获取抢购批次
-function getBatch(){
-    return C("BATCH");
-}
 
 function fetchField($arr,$key){
     if(! $arr) return array();
@@ -56,85 +93,14 @@ function fetchField($arr,$key){
     return $re;
 }
 
-function updateXmuser($user){
-    $order_url = "http://order.xiaomi.com/user/order";
-    if($snoopy = xmlogin($user)){
-        $snoopy -> fetch($order_url);
-        preg_match_all("/<span class=\"user\">(.*?)<\/span\>/i",$snoopy -> results,$nickname);
-        $xmuser['nickname'] = $nickname['1']['0'];
-        preg_match_all("/\/chgpass\/uuid\/(.*?)\"\>修改/i",$snoopy -> results,$minum);
-        $xmuser['minum'] = $minum['1']['0'];
-        $xmuser['status'] = '1' ;
-        //print_r($xmuser);die;
-        return $xmuser;
-    }else{
-        return false;
-    }
-}
 
-/**
- *登陆小米官网
- * @param $user array 用户数据
- * @return url|false 登陆成功返回success url
- */
-function xmlogin($user){
-    if(! is_array($user)){
-        return false;
-    }
-    $login_url = C("XM_LOGIN_URL");
-    import ("@.ORG.Snoopy");
-    $snoopy = new Snoopy();
-    $snoopy -> submit($login_url,$user);
-    preg_match_all("<a href=\"(.*?)\">",$snoopy->results,$links);
-    $url = $links['1']['1'];
-    //print_r($user);
-    if($url){
-        $snoopy->fetch($url);
-        return $snoopy;
-    }else{
-        return false;
-    }
-}
-
-function getMyXmUser(){
-    //获取该用户能够分配的账号
-    $allot_model = M("XmUserAllot");
-    $uid = getMemberId();
-    $receive_list = $allot_model -> where("receive_id='{$uid}'")->field('xmuser_id') -> select();
-    $xmuser_model = M("XmUser");
-    $my_list = $xmuser_model -> where("owner='{$uid}'")->field('id') -> select();
-    if(isset($receive_list)){
-        if(isset($my_list)){
-             $id_list = array_merge($my_list,$receive_list);
-        }else{
-            $id_list = $receive_list;
-        }
-    }else{
-        $id_list = $my_list;
-    }
-    foreach ($id_list as $key => $value) {
-        foreach ($value as $k => $v) {
-            $id_list[$key] = $v;
-        }
-    }
-    //读取账号分配信息
-    $id_list = array_unique($id_list);
-    return $id_list;
-}
-function getAllotedXmUser(){
-    $allot_model = M("XmUserAllot");
-    $uid = getMemberId();
-    $alloted_list = $allot_model -> where("send_id='{$uid}'")->field('xmuser_id') -> select();
-    foreach ($alloted_list as $key => $value) {
-        foreach ($value as $k => $v) {
-            $alloted_list[$key] = $v;
-        }
-    }
-    return $alloted_list;
-}
 function getMemberId() {
         return isset($_SESSION[C('USER_AUTH_KEY')])?$_SESSION[C('USER_AUTH_KEY')]:0;
     }
+function getRole($uid){
+    $role_user = M("RoleUser");
+    $role = $role_user->where("user_id={$uid}")->getField("role_id");
+}
 function toDate($time, $format = 'Y-m-d H:i:s') {
 	if (empty ( $time )) {
 		return '';
@@ -312,21 +278,6 @@ function showStatus($status, $id, $callback="") {
 	return $info;
 }
 
-function showXmStatus($status){
-    switch ($status){
-        case 0 :
-            $info = '已禁用';
-            break;
-        case 1 :
-            $info = '正常';
-            break;
-        case 2 :
-            $info = '密码不对';
-            break;
-    }
-    return $info;
-}
-
 /**
  +----------------------------------------------------------
  * 获取登录验证码 默认为4位数字
@@ -433,7 +384,7 @@ function rand_string($len = 6, $type = '', $addChars = '') {
 	}
 	return $str;
 }
-function pwdHash($password, $type = 'md5') {
+function pwdHash1($password, $type = 'md5') {
 	return hash ( $type, $password );
 }
 

@@ -9,7 +9,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-// $Id: Sae.php 903 2012-03-16 03:50:22Z luofei614@126.com $
+// $Id: Sae.php 2793 2012-03-02 05:34:40Z liu21st $
 // Sae版ThinkPHP 入口文件
 //[sae]定义SAE_PATH
 defined('ENGINE_PATH') or define('ENGINE_PATH',dirname(__FILE__).'/');
