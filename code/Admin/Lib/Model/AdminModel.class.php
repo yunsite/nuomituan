@@ -10,15 +10,15 @@ class AdminModel extends CommonModel {
 		);
 
 	public $_auto		=	array(
-		array('password','pwdHash',Model::MODEL_BOTH,'callback'),
+		array('password','pwdHash1',Model::MODEL_BOTH,'callback'),
 		array('create_time','time',Model::MODEL_INSERT,'function'),
 		array('update_time','time',Model::MODEL_UPDATE,'function'),
 		array('fid','getMemberId',Model::MODEL_INSERT,'function'),
 		);
 
-	protected function pwdHash() {
+	protected function pwdHash1() {
 		if(isset($_POST['password'])) {
-			return pwdHash($_POST['password']);
+			return pwdHash1($_POST['password']);
 		}else{
 			return false;
 		}

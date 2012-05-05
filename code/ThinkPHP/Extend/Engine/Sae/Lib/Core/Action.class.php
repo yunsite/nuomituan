@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
-// $Id: Action.class.php 903 2012-03-16 03:50:22Z luofei614@126.com $
+// $Id: Action.class.php 2793 2012-03-02 05:34:40Z liu21st $
 
 /**
  +------------------------------------------------------------------------------
@@ -18,7 +18,7 @@
  * @package  Think
  * @subpackage  Core
  * @author   liu21st <liu21st@gmail.com>
- * @version  $Id: Action.class.php 903 2012-03-16 03:50:22Z luofei614@126.com $
+ * @version  $Id: Action.class.php 2793 2012-03-02 05:34:40Z liu21st $
  +------------------------------------------------------------------------------
  */
 abstract class Action {
@@ -287,37 +287,6 @@ abstract class Action {
      * @return void
      +----------------------------------------------------------
      */
-    protected function ajaxReturn($data,$info='',$status=1,$type='')
-    {
-        // 保证AJAX返回后也能保存日志
-        //if(C('LOG_RECORD')) Log::save();
-        $result  =  array();
-        $result['status']  =  $status;
-        $result['statusCode']  =  $status;  // zhanghuihua@msn.com
-        $result['navTabId']  =  $_REQUEST['navTabId'];  // zhanghuihua@msn.com
-        $result['callbackType']  =  $_REQUEST['callbackType'];  // zhanghuihua@msn.com
-        $result['forwardUrl']  =  $_REQUEST['forwardUrl'];  // zhanghuihua@msn.com
-        $result['message'] =  $info; // zhanghuihua@msn.com
-        $result['info'] =  $info;
-        $result['data'] = $data;
-        if(empty($type)) $type  =   C('DEFAULT_AJAX_RETURN');
-        if(strtoupper($type)=='JSON') {
-            // 返回JSON数据格式到客户端 包含状态信息
-            header("Content-Type:text/html; charset=utf-8");
-            exit(json_encode($result));
-        }elseif(strtoupper($type)=='XML'){
-            // 返回xml格式数据
-            header("Content-Type:text/xml; charset=utf-8");
-            exit(xml_encode($result));
-        }elseif(strtoupper($type)=='EVAL'){
-            // 返回可执行的js脚本
-            header("Content-Type:text/html; charset=utf-8");
-            exit($data);
-        }else{
-            // TODO 增加其它格式
-        }
-    }
-    /*
     protected function ajaxReturn($data,$info='',$status=1,$type='') {
         $result  =  array();
         $result['status']  =  $status;
@@ -343,7 +312,7 @@ abstract class Action {
             // TODO 增加其它格式
         }
     }
-    */
+
     /**
      +----------------------------------------------------------
      * Action跳转(URL重定向） 支持指定模块和延时跳转

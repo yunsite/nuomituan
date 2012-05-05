@@ -25,7 +25,27 @@ $config	= array(
 	'SITENAME'=>'小米团后台',
     'CONTACT'=>'鱼鱼',
     'COMPANY'=>'小米团',
+   //前台的状态配置 
+    "SALT_LENGTH" => 8,
+    "DEFAULT_CITY" => 1,
+    "GROUP_SORT" => array(
+        'coupon' => '1',
+        'goods' => '2',
+    ),
+    'DEAL_STATUS' => array(
+        'unstart' => '1',
+        'unsuccess' => '2',
+        'success' => '3',
+        'saleout' => '4',
+        'timeout' => '5',
+    ),
+    'ORDER_STATUS' => array(
+        'deal' => '1',
+        'paid' => '2',
+        'delivered' => '3',
+        'success' => '4',
+        'closed' => '5', 
+    ),
 );
-
 return array_merge($config,$db);
 ?>

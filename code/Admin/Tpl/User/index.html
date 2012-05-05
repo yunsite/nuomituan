@@ -1,0 +1,75 @@
+<include file="Public:pagerForm" />
+
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="__URL__" method="post">
+	<div class="searchBar">
+		<ul class="searchContent">
+			<li>
+				<label>用户名：</label>
+				<input type="text" name="username" value=""/>
+			</li>
+		</ul>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="__URL__/add" target="dialog" mask="true"><span>新增</span></a></li>
+			<li><a class="delete" href="__URL__/foreverdelete/id/{sid_user}/navTabId/__MODULE__" target="ajaxTodo" title="你确定要删除吗？" warn="请选择用户"><span>删除</span></a></li>
+			<li><a class="edit" href="__URL__/edit/id/{sid_user}" target="dialog" mask="true" warn="请选择用户"><span>编辑</span></a></li>
+			<li class="line">line</li>
+			<li><a class="edit" href="__SELF__" target="navTab" rel="ac_2" title="用户管理"><span>手动刷新</span></a></li>
+		</ul>
+	</div>
+
+	<table class="table" width="100%" layoutH="138">
+		<thead>
+		<tr>
+		    <th width="60" align="center">
+                <input type="checkbox" class="checkboxCtrl" group="c1" />
+                <button type="button" class="checkboxCtrl" group="c1" selectType="invert">反</button>
+            </th>
+			<th width="60">编号</th>
+			<th width="100" orderField="username" <if condition="$_REQUEST._order eq 'username'">class="{$_REQUEST._sort}"</if>>用户名</th>
+			<th orderField="nike_name" <if condition="$_REQUEST._order eq 'nike_name'">class="{$_REQUEST._sort}"</if>>昵称</th>
+			<th orderField="email" <if condition="$_REQUEST._order eq 'email'">class="{$_REQUEST._sort}"</if>>Email</th>
+			<th orderField="user_sort" <if condition="$_REQUEST._order eq 'user_sort'">class="{$_REQUEST._sort}"</if>>用户类型</th>
+			<th orderField="phone" <if condition="$_REQUEST._order eq 'phone'">class="{$_REQUEST._sort}"</if>>手机号</th>
+			<th orderField="balance" <if condition="$_REQUEST._order eq 'balance'">class="{$_REQUEST._sort}"</if>>余额（￥）</th>
+			<th width="80" orderField="status" <if condition="$_REQUEST._order eq 'status'">class="{$_REQUEST._sort}"</if>>状态</th>
+		</tr>
+		</thead>
+		<tbody>
+		<volist id="vo" name="list">
+			<tr target="sid_user" rel="{$vo['id']}">
+				<td><label><input type="checkbox" name="c1" value="{$vo['id']}" /></label></td>
+				<td>{$vo['id']}</td>
+				<td>{$vo['username']}</td>
+				<td>{$vo['nike_name']}</td>
+				<td>{$vo['email']}</td>
+				<td><if condition="$vo['user_sort'] eq 1">普通用户 <else />商家</if></td>
+				<td>{$vo['phone']}</td>
+				<td>{$vo['balance']}</td>
+				<td>{$vo['status']|showStatus=$vo['id']}</td>
+			</tr>
+		</volist>
+		</tbody>
+	</table>
+
+	<div class="panelBar">
+		<div class="pages">
+			<span>共{$totalCount}条</span>
+		</div>
+		<div class="pagination" targetType="navTab" totalCount="{$totalCount}" numPerPage="{$numPerPage}" pageNumShown="10" currentPage="{$currentPage}"></div>
+	</div>
+
+</div>
+
+

@@ -23,10 +23,19 @@ function showOrderStatus($status){
     $order_status = getOrderStatus();
     switch ($status) {
         case $order_status['deal']:
-            return '已下单';
+            return "已下单";
             break;
         case $order_status['paid']:
-            return '已支付';
+            return "已付款";
+            break;
+        case $order_status['delivered']:
+            return "已发货";
+            break;
+        case $order_status['success']:
+            return "交易完成";
+            break;
+        case $order_status['closed']:
+            return "已关闭";
             break;
     }
 }

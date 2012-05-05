@@ -1,6 +1,6 @@
 <?php
 class CommonAction extends Action {
-	
+	protected $isRelation = false;
 	function _initialize() {
 		// 用户权限检查
 		if (C ( 'USER_AUTH_ON' ) && !in_array(MODULE_NAME,explode(',',C('NOT_AUTH_MODULE')))) {
@@ -29,7 +29,8 @@ class CommonAction extends Action {
 			}
 		}
 	}
-	public function index() {
+	public function index($relation=false) {
+	    $this -> isRelation = $relation;
 		//列表过滤器，生成查询Map对象
 		$map = $this->_search ();
 		if (method_exists ( $this, '_filter' )) {
@@ -37,6 +38,7 @@ class CommonAction extends Action {
 		}
 		$name=$this->getActionName();
 		$model = D ($name);
+		$this -> assign("search",$map);
 		if (! empty ( $model )) {
 			$this->_list ( $model, $map );
 		}
@@ -132,7 +134,11 @@ class CommonAction extends Action {
 			}
 			$p = new Page ( $count, $listRows );
 			//分页查询数据
-			$voList = $model->where($map)->order( "`" . $order . "` " . $sort)->limit($p->firstRow . ',' . $p->listRows)->select ( );
+			if($this->isRelation){
+			   $voList = $model->relation($this->isRelation)->where($map)->order( "`" . $order . "` " . $sort)->limit($p->firstRow . ',' . $p->listRows)->select (); 
+			}else{
+			    $voList = $model->where($map)->order( "`" . $order . "` " . $sort)->limit($p->firstRow . ',' . $p->listRows)->select ();
+			}
 			//echo $model->getlastsql();
 			//分页跳转的时候保证查询条件
 			foreach ( $map as $key => $val ) {
@@ -174,7 +180,7 @@ class CommonAction extends Action {
 		$list=$model->add ();
 		if ($list!==false) { //保存成功
 			$this->assign ( 'jumpUrl', cookie ( '_currentUrl_' ) );
-			$this->success ('新增成功!');
+			$this->success ('新增成功!，请刷新~');
 		} else {
 			//失败提示
 			$this->error ('新增失败!');
@@ -210,7 +216,7 @@ class CommonAction extends Action {
 		if (false !== $list) {
 			//成功提示
 			$this->assign ( 'jumpUrl', cookie ( '_currentUrl_' ) );
-			$this->success ('编辑成功!');
+			$this->success ('编辑成功!，请刷新~');
 		} else {
 			//错误提示
 			$this->error ('编辑失败!');
@@ -258,7 +264,7 @@ class CommonAction extends Action {
 				$condition = array ($pk => array ('in', explode ( ',', $id ) ) );
 				if (false !== $model->where ( $condition )->delete ()) {
 					//echo $model->getlastsql();
-					$this->success ('删除成功！');
+					$this->success ('删除成功！,请刷新~');
 				} else {
 					$this->error ('删除失败！');
 				}
