@@ -1,10 +1,8 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2012/3/30 下午 9:47:38                         */
+/* Created on:     2012/3/30 下午 10:20:05                        */
 /*==============================================================*/
 
-
-drop table if exists mn_user;
 
 drop table if exists nm_admin;
 
@@ -44,25 +42,9 @@ drop table if exists nm_supplier_pay;
 
 drop table if exists nm_sys_cfg;
 
-drop table if exists nm_user_address;
+drop table if exists nm_user;
 
-/*==============================================================*/
-/* Table: mn_user                                               */
-/*==============================================================*/
-create table mn_user
-(
-   id                   int unsigned not null auto_increment,
-   user_name            varchar(128) not null,
-   pass_word            varchar(128) not null,
-   salt                 varchar(128) not null,
-   status               char(1) not null,
-   nike_name            varchar(16),
-   email                varchar(128),
-   phone                varchar(16),
-   balance              float not null default 0,
-   user_sort            char(1) not null,
-   primary key (id)
-);
+drop table if exists nm_user_address;
 
 /*==============================================================*/
 /* Table: nm_admin                                              */
@@ -352,6 +334,24 @@ create table nm_sys_cfg
 );
 
 /*==============================================================*/
+/* Table: nm_user                                               */
+/*==============================================================*/
+create table nm_user
+(
+   id                   int unsigned not null auto_increment,
+   user_name            varchar(128) not null,
+   pass_word            varchar(128) not null,
+   salt                 varchar(128) not null,
+   status               char(1) not null,
+   nike_name            varchar(16),
+   email                varchar(128),
+   phone                varchar(16),
+   balance              float not null default 0,
+   user_sort            char(1) not null,
+   primary key (id)
+);
+
+/*==============================================================*/
 /* Table: nm_user_address                                       */
 /*==============================================================*/
 create table nm_user_address
@@ -387,7 +387,7 @@ alter table nm_comment add constraint FK_comment_did_on_deal_id foreign key (did
       references nm_deal (ID) on delete restrict on update restrict;
 
 alter table nm_comment add constraint FK_comment_uid_on_user_id foreign key (uid)
-      references mn_user (id) on delete restrict on update restrict;
+      references nm_user (id) on delete restrict on update restrict;
 
 alter table nm_coupon add constraint FK_coupon_order_no_on_dear_order_no foreign key (order_no)
       references nm_deal_order (id) on delete restrict on update restrict;
@@ -396,7 +396,7 @@ alter table nm_deal add constraint FK_deal_city_on_city_id foreign key (city)
       references nm_city (id) on delete restrict on update restrict;
 
 alter table nm_deal add constraint FK_deal_sid_on_user_id foreign key (sid)
-      references mn_user (id) on delete restrict on update restrict;
+      references nm_user (id) on delete restrict on update restrict;
 
 alter table nm_deal add constraint FK_deal_sort_on_deal_sort_id foreign key (sort)
       references nm_deal_sort (ID) on delete restrict on update restrict;
@@ -405,7 +405,7 @@ alter table nm_deal_order add constraint FK_deal_order_address_on_user_address_i
       references nm_user_address (ID) on delete restrict on update restrict;
 
 alter table nm_deal_order add constraint FK_deal_order_uid_on_user_id foreign key (uid)
-      references mn_user (id) on delete restrict on update restrict;
+      references nm_user (id) on delete restrict on update restrict;
 
 alter table nm_deal_order add constraint FK_user_order_did_on_deal_id foreign key (did)
       references nm_deal (ID) on delete restrict on update restrict;
@@ -414,11 +414,11 @@ alter table nm_income add constraint FK_income_did_on_deal_id foreign key (did)
       references nm_deal (ID) on delete restrict on update restrict;
 
 alter table nm_password_return add constraint FK_password_return_uid_on_user foreign key (uid)
-      references mn_user (id) on delete restrict on update restrict;
+      references nm_user (id) on delete restrict on update restrict;
 
 alter table nm_supplier_pay add constraint FK_supplier_uid_on_user_id foreign key (sid)
-      references mn_user (id) on delete restrict on update restrict;
+      references nm_user (id) on delete restrict on update restrict;
 
 alter table nm_user_address add constraint FK_user_address_uid_on_user_id foreign key (uid)
-      references mn_user (id) on delete restrict on update restrict;
+      references nm_user (id) on delete restrict on update restrict;
 
